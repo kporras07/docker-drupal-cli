@@ -2,7 +2,7 @@ FROM ubuntu:12.04
 
 MAINTAINER Leonid Makarov <leonid.makarov@blinkreaction.com>
 
-# Set timezone and locale.
+# Set timezone aand locale.
 RUN locale-gen en_US.UTF-8
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
@@ -28,8 +28,19 @@ RUN \
 RUN \
     DEBIAN_FRONTEND=noninteractive apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get -y --force-yes install \
-    php5-common php5-cli php-pear php5-mysql php5-imagick php5-mcrypt \
-    php5-curl php5-gd php5-sqlite php5-json php5-memcache php5-intl \
+    php5-common \
+    php5-cli \
+    php-pear \
+    php5-mysql \
+    php5-imagick \
+    php5-mcrypt \
+    php5-curl \
+    php5-gd \
+    php5-sqlite \
+    php5-json \
+    php5-memcache \
+    php5-intl \
+    php5-xdebug\
     --no-install-recommends && \
     # Cleanup
     DEBIAN_FRONTEND=noninteractive apt-get clean && \
