@@ -18,7 +18,15 @@ RUN echo "deb http://ppa.launchpad.net/ondrej/php5-5.6/ubuntu precise main " >> 
 RUN \
     DEBIAN_FRONTEND=noninteractive apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get -y --force-yes install \
-    supervisor curl wget zip git mysql-client pv apt-transport-https \
+    supervisor \
+    curl \
+    wget \
+    zip \
+    git \
+    mysql-client \
+    pv \
+    apt-transport-https \
+    vim \
     --no-install-recommends && \
     # Cleanup
     DEBIAN_FRONTEND=noninteractive apt-get clean && \
@@ -40,7 +48,7 @@ RUN \
     php5-json \
     php5-memcache \
     php5-intl \
-    php5-xdebug\
+    php5-xdebug \
     --no-install-recommends && \
     # Cleanup
     DEBIAN_FRONTEND=noninteractive apt-get clean && \
