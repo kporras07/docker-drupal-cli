@@ -22,6 +22,7 @@ RUN \
     curl \
     wget \
     zip \
+    unzip \
     git \
     mysql-client \
     pv \
@@ -83,6 +84,10 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 RUN composer global require drush/drush:7.* && \
     curl -LSs http://drupalconsole.com/installer | php && \
     mv console.phar /usr/local/bin/drupal
+
+# Install ahoy
+RUN wget -q https://github.com/devinci-code/ahoy/releases/download/1.0.0/ahoy-`uname -s`-amd64 -O /usr/local/bin/ahoy && \
+    chmod +x /usr/local/bin/ahoy
 
 # PHP settings changes
 RUN sed -i 's/memory_limit = .*/memory_limit = 512M/' /etc/php5/cli/php.ini && \
