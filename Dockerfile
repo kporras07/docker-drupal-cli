@@ -28,6 +28,7 @@ RUN \
     pv \
     apt-transport-https \
     vim \
+    patch \
     --no-install-recommends && \
     # Cleanup
     DEBIAN_FRONTEND=noninteractive apt-get clean && \
