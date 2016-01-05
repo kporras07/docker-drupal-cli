@@ -82,12 +82,13 @@ RUN npm install -g grunt-cli bower
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Drush and Drupal Console
-RUN composer global require drush/drush:8.0.0 && \
-    curl -LSs http://drupalconsole.com/installer | php && \
-    mv console.phar /usr/local/bin/drupal
+RUN composer global require drush/drush:8.0.1
+    # Disable drupal console for now as it's causing issues during building.
+    # curl -LSs http://drupalconsole.com/installer | php && \
+    # mv console.phar /usr/local/bin/drupal
 
 # Install ahoy
-RUN wget -q https://github.com/devinci-code/ahoy/releases/download/1.0.0/ahoy-`uname -s`-amd64 -O /usr/local/bin/ahoy && \
+RUN wget -q https://github.com/devinci-code/ahoy/releases/download/1.1.0/ahoy-`uname -s`-amd64 -O /usr/local/bin/ahoy && \
     chmod +x /usr/local/bin/ahoy
 
 # PHP settings changes
