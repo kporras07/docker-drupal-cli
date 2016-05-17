@@ -107,6 +107,8 @@ ENV BUNDLE_PATH .bundler
 COPY config/.ssh /root/.ssh
 # Drush settings
 COPY config/.drush /root/.drush
+# Add registry_rebuild
+RUN drush dl registry_rebuild-7.x
 
 # Startup script
 COPY ./startup.sh /opt/startup.sh
