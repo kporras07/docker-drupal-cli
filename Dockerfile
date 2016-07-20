@@ -82,7 +82,7 @@ RUN npm install -g grunt-cli bower
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Drush and Drupal Console
-RUN composer global require drush/drush:8.0.1
+RUN composer global require drush/drush:8.1.3
     # Disable drupal console for now as it's causing issues during building.
     # curl -LSs http://drupalconsole.com/installer | php && \
     # mv console.phar /usr/local/bin/drupal
