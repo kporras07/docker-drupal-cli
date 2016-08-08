@@ -78,6 +78,11 @@ RUN gem install bundler
 # Grunt, Bower
 RUN npm install -g grunt-cli bower
 
+# Install theme dependencies
+ADD config/deps/package.json /tmp/package.json
+RUN cd /tmp && npm install
+RUN mkdir -p /opt/app && cp -a /tmp/node_modules /opt/app/
+
 # Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
