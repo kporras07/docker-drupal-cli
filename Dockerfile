@@ -78,11 +78,17 @@ RUN gem install bundler
 # Grunt, Bower
 RUN npm install -g grunt-cli bower
 
+# Install theme dependencies
+ADD config/deps/package.json /tmp/package.json
+RUN cd /tmp && npm install
+RUN mkdir -p /opt/app && cp -a /tmp/node_modules /opt/app/
+
 # Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Drush and Drupal Console
+# Drush, Drupal Coder and Drupal Console
 RUN composer global require drush/drush:8.1.3
+RUN composer global require drupal/coder
     # Disable drupal console for now as it's causing issues during building.
     # curl -LSs http://drupalconsole.com/installer | php && \
     # mv console.phar /usr/local/bin/drupal
