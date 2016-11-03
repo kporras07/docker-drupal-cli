@@ -94,7 +94,7 @@ RUN composer global require drupal/coder
     # mv console.phar /usr/local/bin/drupal
 
 # Install ahoy
-RUN wget -q http://nucivic-binaries.s3-us-west-1.amazonaws.com/ahoy -O /usr/local/bin/ahoy && \
+RUN wget -q https://s3-us-west-1.amazonaws.com/nucivic-binaries/ahoy/1.1.0/ahoy-linux-amd64 -O /usr/local/bin/ahoy && \
     chmod +x /usr/local/bin/ahoy
 
 # PHP settings changes
