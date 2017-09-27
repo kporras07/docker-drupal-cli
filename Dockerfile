@@ -1,6 +1,6 @@
-FROM ubuntu:12.04
+FROM ubuntu:16.04
 
-MAINTAINER Leonid Makarov <leonid.makarov@blinkreaction.com>
+MAINTAINER Kevin Porras <kporras07@gmail.com>
 
 # Set timezone aand locale.
 RUN locale-gen en_US.UTF-8
@@ -11,8 +11,12 @@ ENV LC_ALL en_US.UTF-8
 # Prevent services autoload (http://jpetazzo.github.io/2013/10/06/policy-rc-d-do-not-start-services-automatically/)
 RUN echo '#!/bin/sh\nexit 101' > /usr/sbin/policy-rc.d && chmod +x /usr/sbin/policy-rc.d
 
-# Adding https://launchpad.net/~ondrej/+archive/ubuntu/php5 PPA repo for php5.6
-RUN echo "deb http://ppa.launchpad.net/ondrej/php5-5.6/ubuntu precise main " >> /etc/apt/sources.list
+RUN \
+    DEBIAN_FRONTEND=noninteractive apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get -y --force-yes install python-software-properties software-properties-common
+
+# Adding https://launchpad.net/~ondrej/+archive/ubuntu/php PPA repo for php.
+RUN add-apt-repository ppa:ondrej/php
 
 # Basic packages
 RUN \
@@ -38,83 +42,63 @@ RUN \
 RUN \
     DEBIAN_FRONTEND=noninteractive apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get -y --force-yes install \
-    php5-common \
-    php5-cli \
+    php7.1-common \
+    php7.1-cli \
     php-pear \
-    php5-mysql \
-    php5-imagick \
-    php5-mcrypt \
-    php5-curl \
-    php5-gd \
-    php5-sqlite \
-    php5-json \
-    php5-memcache \
-    php5-intl \
-    php5-xdebug \
+    php7.1-mysql \
+    php7.1-curl \
+    php7.1-gd \
+    php7.1-sqlite \
+    php7.1-json \
+    php7.1-memcache \
+    php7.1-intl \
+    php-xdebug \
+    php7.1-xml \
     --no-install-recommends && \
     # Cleanup
     DEBIAN_FRONTEND=noninteractive apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# Adding NodeJS repo (for up-to-date versions)
-# This command is a stripped down version of "curl --silent --location https://deb.nodesource.com/setup_0.12 | bash -"
-RUN curl -s https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add - && \
-    echo 'deb https://deb.nodesource.com/node_0.12 precise main' > /etc/apt/sources.list.d/nodesource.list && \
-    echo 'deb-src https://deb.nodesource.com/node_0.12 precise main' >> /etc/apt/sources.list.d/nodesource.list
-
-# Other language packages and dependencies
+# Install nvm and a default node version
+ENV NVM_VERSION 0.33.4
+ENV NODE_VERSION 6.10.1
+ENV NVM_DIR $HOME/.nvm
 RUN \
-    DEBIAN_FRONTEND=noninteractive apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get -y --force-yes install \
-    ruby1.9.1-full rlwrap nodejs \
-    --no-install-recommends && \
-    # Cleanup
-    DEBIAN_FRONTEND=noninteractive apt-get clean && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-# Bundler
-RUN gem install bundler
-
-# Grunt, Bower
-RUN npm install -g grunt-cli bower
-
-# Install theme dependencies
-ADD config/deps/package.json /tmp/package.json
-RUN cd /tmp && npm install
-RUN mkdir -p /opt/app && cp -a /tmp/node_modules /opt/app/
+    curl -sSL https://raw.githubusercontent.com/creationix/nvm/v${NVM_VERSION}/install.sh | bash && \
+    . $NVM_DIR/nvm.sh && \
+    nvm install $NODE_VERSION && \
+    nvm alias default $NODE_VERSION && \
+    # Install global node packages
+    npm install -g npm && \
+    npm install -g grunt-cli && \
+    npm install -g gulp-cli
 
 # Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Drush, Drupal Coder and Drupal Console
-RUN composer global require drush/drush:8.1.3
+RUN composer global require drush/drush:8.1.13
 RUN composer global require drupal/coder
     # Disable drupal console for now as it's causing issues during building.
     # curl -LSs http://drupalconsole.com/installer | php && \
     # mv console.phar /usr/local/bin/drupal
 
 # Install ahoy
-RUN wget -q https://s3-us-west-1.amazonaws.com/nucivic-binaries/ahoy/2.0.0-alpha/ahoy-linux-amd64 -O /usr/local/bin/ahoy && \
-    chmod +x /usr/local/bin/ahoy
+RUN wget -q https://github.com/ahoy-cli/ahoy/releases/download/2.0.0/ahoy-bin-linux-amd64 -O /usr/local/bin/ahoy && chmod +x /usr/local/bin/ahoy
 
 # PHP settings changes
-RUN sed -i 's/memory_limit = .*/memory_limit = 512M/' /etc/php5/cli/php.ini && \
-    sed -i 's/max_execution_time = .*/max_execution_time = 300/' /etc/php5/cli/php.ini
+RUN sed -i 's/memory_limit = .*/memory_limit = 512M/' /etc/php/7.1/cli/php.ini && \
+    sed -i 's/max_execution_time = .*/max_execution_time = 300/' /etc/php/7.1/cli/php.ini
 
-WORKDIR /var/www
+WORKDIR /var/www/html
 
 # Add Composer bin directory to PATH
 ENV PATH /root/.composer/vendor/bin:$PATH
-
-# Home directory for bundle installs
-ENV BUNDLE_PATH .bundler
 
 # SSH settigns
 COPY config/.ssh /root/.ssh
 # Drush settings
 COPY config/.drush /root/.drush
-# Add registry_rebuild
-RUN drush dl registry_rebuild-7.x
 
 # Startup script
 COPY ./startup.sh /opt/startup.sh
