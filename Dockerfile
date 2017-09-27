@@ -76,12 +76,9 @@ RUN \
 # Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Drush, Drupal Coder and Drupal Console
+# Drush and Drupal Coder.
 RUN composer global require drush/drush:8.1.13
 RUN composer global require drupal/coder
-    # Disable drupal console for now as it's causing issues during building.
-    # curl -LSs http://drupalconsole.com/installer | php && \
-    # mv console.phar /usr/local/bin/drupal
 
 # Install ahoy
 RUN wget -q https://github.com/ahoy-cli/ahoy/releases/download/2.0.0/ahoy-bin-linux-amd64 -O /usr/local/bin/ahoy && chmod +x /usr/local/bin/ahoy
