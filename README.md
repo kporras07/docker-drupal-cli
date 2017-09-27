@@ -2,7 +2,7 @@
 
 ## Includes
 
-- PHP-CLI 7.2
+- PHP-CLI 7.1
 - Composer
 - Drush 8
 - Drupal Console (disabled by now)
