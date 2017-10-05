@@ -79,8 +79,10 @@ RUN \
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Drush and Drupal Coder.
-RUN composer global require drush/drush:8.1.13
 RUN composer global require drupal/coder
+RUN wget -O /tmp/drush.phar https://github.com/drush-ops/drush-launcher/releases/download/0.4.2/drush.phar
+RUN chmod +x /tmp/drush.phar
+RUN mv /tmp/drush.phar /usr/local/bin/drush
 
 # Install ahoy
 RUN wget -q https://github.com/ahoy-cli/ahoy/releases/download/2.0.0/ahoy-bin-linux-amd64 -O /usr/local/bin/ahoy && chmod +x /usr/local/bin/ahoy
@@ -96,8 +98,6 @@ ENV PATH /root/.composer/vendor/bin:$PATH
 
 # SSH settigns
 COPY config/.ssh /root/.ssh
-# Drush settings
-COPY config/.drush /root/.drush
 
 # Startup script
 COPY ./startup.sh /opt/startup.sh
