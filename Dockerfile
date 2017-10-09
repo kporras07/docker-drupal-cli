@@ -56,6 +56,7 @@ RUN \
     php7.1-intl \
     php-xdebug \
     php7.1-xml \
+    php7.1-bcmath \
     --no-install-recommends && \
     # Cleanup
     DEBIAN_FRONTEND=noninteractive apt-get clean && \
