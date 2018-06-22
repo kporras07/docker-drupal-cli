@@ -85,6 +85,10 @@ RUN wget -O /tmp/drush.phar https://github.com/drush-ops/drush-launcher/releases
 RUN chmod +x /tmp/drush.phar
 RUN mv /tmp/drush.phar /usr/local/bin/drush
 
+# Install Robo
+RUN wget https://robo.li/robo.phar
+RUN chmod +x robo.phar && mv robo.phar /usr/local/bin/robo
+
 # Install ahoy
 RUN wget -q https://github.com/ahoy-cli/ahoy/releases/download/2.0.0/ahoy-bin-linux-amd64 -O /usr/local/bin/ahoy && chmod +x /usr/local/bin/ahoy
 
