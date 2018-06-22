@@ -75,6 +75,7 @@ RUN \
     npm install -g npm && \
     npm install -g grunt-cli && \
     npm install -g gulp-cli
+ENV PATH /.npm/versions/node/$NODE_VERSION/bin:$PATH
 
 # Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
