@@ -94,8 +94,8 @@ RUN chmod +x robo.phar && mv robo.phar /usr/local/bin/robo
 RUN wget -q https://github.com/ahoy-cli/ahoy/releases/download/2.0.0/ahoy-bin-linux-amd64 -O /usr/local/bin/ahoy && chmod +x /usr/local/bin/ahoy
 
 # PHP settings changes
-RUN sed -i 's/memory_limit = .*/memory_limit = 512M/' /etc/php/7.1/cli/php.ini && \
-    sed -i 's/max_execution_time = .*/max_execution_time = 300/' /etc/php/7.1/cli/php.ini
+RUN sed -i 's/memory_limit = .*/memory_limit = 512M/' /etc/php/7.2/cli/php.ini && \
+    sed -i 's/max_execution_time = .*/max_execution_time = 300/' /etc/php/7.2/cli/php.ini
 
 WORKDIR /var/www/html
 
