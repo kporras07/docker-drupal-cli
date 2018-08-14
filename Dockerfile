@@ -44,19 +44,19 @@ RUN \
 RUN \
     DEBIAN_FRONTEND=noninteractive apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get -y --force-yes install \
-    php7.1-common \
-    php7.1-cli \
+    php7.2-common \
+    php7.2-cli \
     php-pear \
-    php7.1-mysql \
-    php7.1-curl \
-    php7.1-gd \
-    php7.1-sqlite \
-    php7.1-json \
-    php7.1-memcache \
-    php7.1-intl \
+    php7.2-mysql \
+    php7.2-curl \
+    php7.2-gd \
+    php7.2-sqlite \
+    php7.2-json \
+    php7.2-memcache \
+    php7.2-intl \
     php-xdebug \
-    php7.1-xml \
-    php7.1-bcmath \
+    php7.2-xml \
+    php7.2-bcmath \
     --no-install-recommends && \
     # Cleanup
     DEBIAN_FRONTEND=noninteractive apt-get clean && \
