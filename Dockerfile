@@ -47,6 +47,7 @@ RUN \
     php7.2-common \
     php7.2-cli \
     php-pear \
+    php7.2-mbstring \
     php7.2-mysql \
     php7.2-curl \
     php7.2-gd \
