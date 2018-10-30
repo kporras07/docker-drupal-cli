@@ -83,9 +83,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 # Drush and Drupal Coder.
 RUN composer global require drupal/coder
-RUN wget -O /tmp/drush.phar https://github.com/drush-ops/drush-launcher/releases/download/0.4.2/drush.phar
-RUN chmod +x /tmp/drush.phar
-RUN mv /tmp/drush.phar /usr/local/bin/drush
+RUN curl -L https://github.com/drush-ops/drush/releases/download/8.1.17/drush.phar --output /usr/local/bin/drush && chmod +x /usr/local/bin/drush
 
 # Install Robo
 RUN wget https://robo.li/robo.phar
