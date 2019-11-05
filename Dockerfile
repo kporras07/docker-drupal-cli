@@ -68,6 +68,7 @@ RUN \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN pecl install amqp
+RUN echo 'extension=amqp.so' >> /etc/php/7.2/cli/php.ini
 
 # Install nvm and a default node version
 ENV NVM_VERSION 0.33.4
