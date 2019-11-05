@@ -35,6 +35,9 @@ RUN \
     apt-transport-https \
     vim \
     patch \
+    gcc make autoconf libc-dev pkg-config \
+    libssl-dev \
+    librabbitmq-dev \
     --no-install-recommends && \
     # Cleanup
     DEBIAN_FRONTEND=noninteractive apt-get clean && \
@@ -46,6 +49,7 @@ RUN \
     DEBIAN_FRONTEND=noninteractive apt-get -y --force-yes install \
     php7.2-common \
     php7.2-cli \
+    php7.2-dev \
     php-pear \
     php7.2-mbstring \
     php7.2-mysql \
@@ -62,6 +66,8 @@ RUN \
     # Cleanup
     DEBIAN_FRONTEND=noninteractive apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+RUN pecl install amqp
 
 # Install nvm and a default node version
 ENV NVM_VERSION 0.33.4
