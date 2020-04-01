@@ -47,28 +47,28 @@ RUN \
 RUN \
     DEBIAN_FRONTEND=noninteractive apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get -y --force-yes install \
-    php7.2-common \
-    php7.2-cli \
-    php7.2-dev \
+    php7.3-common \
+    php7.3-cli \
+    php7.3-dev \
     php-pear \
-    php7.2-mbstring \
-    php7.2-mysql \
-    php7.2-curl \
-    php7.2-gd \
-    php7.2-sqlite \
-    php7.2-json \
-    php7.2-memcache \
-    php7.2-intl \
+    php7.3-mbstring \
+    php7.3-mysql \
+    php7.3-curl \
+    php7.3-gd \
+    php7.3-sqlite \
+    php7.3-json \
+    php7.3-memcache \
+    php7.3-intl \
     php-xdebug \
-    php7.2-xml \
-    php7.2-bcmath \
+    php7.3-xml \
+    php7.3-bcmath \
     --no-install-recommends && \
     # Cleanup
     DEBIAN_FRONTEND=noninteractive apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN pecl install amqp
-RUN echo 'extension=amqp.so' >> /etc/php/7.2/cli/php.ini
+RUN echo 'extension=amqp.so' >> /etc/php/7.3/cli/php.ini
 
 # Install nvm and a default node version
 ENV NVM_VERSION 0.33.4
@@ -102,8 +102,8 @@ RUN chmod +x robo.phar && mv robo.phar /usr/local/bin/robo
 RUN wget -q https://github.com/ahoy-cli/ahoy/releases/download/2.0.0/ahoy-bin-linux-amd64 -O /usr/local/bin/ahoy && chmod +x /usr/local/bin/ahoy
 
 # PHP settings changes
-RUN sed -i 's/memory_limit = .*/memory_limit = 512M/' /etc/php/7.2/cli/php.ini && \
-    sed -i 's/max_execution_time = .*/max_execution_time = 300/' /etc/php/7.2/cli/php.ini
+RUN sed -i 's/memory_limit = .*/memory_limit = 512M/' /etc/php/7.3/cli/php.ini && \
+    sed -i 's/max_execution_time = .*/max_execution_time = 300/' /etc/php/7.3/cli/php.ini
 
 WORKDIR /var/www/html
 
