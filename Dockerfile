@@ -44,20 +44,20 @@ RUN \
 RUN \
     DEBIAN_FRONTEND=noninteractive apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get -y --force-yes install \
-    php7.3-common \
-    php7.3-cli \
+    php7.4-common \
+    php7.4-cli \
     php-pear \
-    php7.3-mbstring \
-    php7.3-mysql \
-    php7.3-curl \
-    php7.3-gd \
-    php7.3-sqlite \
-    php7.3-json \
-    php7.3-memcache \
-    php7.3-intl \
+    php7.4-mbstring \
+    php7.4-mysql \
+    php7.4-curl \
+    php7.4-gd \
+    php7.4-sqlite \
+    php7.4-json \
+    php7.4-memcache \
+    php7.4-intl \
     php-xdebug \
-    php7.3-xml \
-    php7.3-bcmath \
+    php7.4-xml \
+    php7.4-bcmath \
     --no-install-recommends && \
     # Cleanup
     DEBIAN_FRONTEND=noninteractive apt-get clean && \
@@ -65,7 +65,7 @@ RUN \
 
 # Install nvm and a default node version
 ENV NVM_VERSION 0.33.4
-ENV NODE_VERSION 6.10.1
+ENV NODE_VERSION 12.16.1
 ENV NVM_DIR $HOME/.nvm
 RUN \
     curl -sSL https://raw.githubusercontent.com/creationix/nvm/v${NVM_VERSION}/install.sh | bash && \
@@ -95,8 +95,8 @@ RUN chmod +x robo.phar && mv robo.phar /usr/local/bin/robo
 RUN wget -q https://github.com/ahoy-cli/ahoy/releases/download/2.0.0/ahoy-bin-linux-amd64 -O /usr/local/bin/ahoy && chmod +x /usr/local/bin/ahoy
 
 # PHP settings changes
-RUN sed -i 's/memory_limit = .*/memory_limit = 512M/' /etc/php/7.3/cli/php.ini && \
-    sed -i 's/max_execution_time = .*/max_execution_time = 300/' /etc/php/7.3/cli/php.ini
+RUN sed -i 's/memory_limit = .*/memory_limit = 512M/' /etc/php/7.4/cli/php.ini && \
+    sed -i 's/max_execution_time = .*/max_execution_time = 300/' /etc/php/7.4/cli/php.ini
 
 WORKDIR /var/www/html
 
