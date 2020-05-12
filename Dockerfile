@@ -83,7 +83,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 # Drush and Drupal Coder.
 RUN composer global require drupal/coder
-RUN wget -O /tmp/drush.phar https://github.com/drush-ops/drush-launcher/releases/download/0.4.2/drush.phar
+RUN wget -O /tmp/drush.phar https://github.com/drush-ops/drush-launcher/releases/download/0.6.0/drush.phar
 RUN chmod +x /tmp/drush.phar
 RUN mv /tmp/drush.phar /usr/local/bin/drush
 
